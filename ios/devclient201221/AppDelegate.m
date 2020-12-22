@@ -11,6 +11,15 @@
 #import <EXSplashScreen/EXSplashScreenService.h>
 #import <UMCore/UMModuleRegistryProvider.h>
 
+#if __has_include(<EXDevMenu/EXDevMenu-umbrella.h>)
+@import EXDevMenu;
+#endif
+ 
+#if __has_include(<EXDevLauncherController.h>)
+#include <EXDevLauncherController.h>
+#endif
+ 
+
 #if defined(FB_SONARKIT_ENABLED) && __has_include(<FlipperKit/FlipperClient.h>)
 #import <FlipperKit/FlipperClient.h>
 #import <FlipperKitLayoutPlugin/FlipperKitLayoutPlugin.h>
@@ -49,7 +58,12 @@ static void InitializeFlipper(UIApplication *application) {
   self.launchOptions = launchOptions;
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
   #ifdef DEBUG
-    [self initializeReactNativeApp];
+    #if __has_include(<EXDevLauncherController.h>)
+      EXDevLauncherController *contoller = [EXDevLauncherController sharedInstance];
+      [contoller startWithWindow:self.window delegate:self launchOptions:launchOptions];
+    #else
+      [self initializeReactNativeApp];
+    #endif
   #else
     EXUpdatesAppController *controller = [EXUpdatesAppController sharedInstance];
     controller.delegate = self;
@@ -63,9 +77,19 @@ static void InitializeFlipper(UIApplication *application) {
 
 - (RCTBridge *)initializeReactNativeApp
 {
-  RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:self.launchOptions];
+  #if __has_include(<EXDevMenu/EXDevMenu-umbrella.h>)
+    NSDictionary *launchOptions = [EXDevLauncherController.sharedInstance getLaunchOptions];
+  #else
+    NSDictionary *launchOptions = self.launchOptions;
+  #endif
+    
+  RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
   RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge moduleName:@"main" initialProperties:nil];
   rootView.backgroundColor = [[UIColor alloc] initWithRed:1.0f green:1.0f blue:1.0f alpha:1];
+
+  #if __has_include(<EXDevMenu/EXDevMenu-umbrella.h>)
+  [DevMenuManager configureWithBridge:bridge];
+  #endif
 
   UIViewController *rootViewController = [UIViewController new];
   rootViewController.view = rootView;
@@ -83,11 +107,15 @@ static void InitializeFlipper(UIApplication *application) {
 }
 
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge {
- #ifdef DEBUG
-  return [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
- #else
+  #ifdef DEBUG
+    #if __has_include(<EXDevLauncherController.h>)
+      return [[EXDevLauncherController sharedInstance] sourceUrl];
+    #else
+      return [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
+    #endif
+  #else
   return [[EXUpdatesAppController sharedInstance] launchAssetUrl];
- #endif
+  #endif
 }
 
 - (void)appController:(EXUpdatesAppController *)appController didStartWithSuccess:(BOOL)success {
@@ -98,6 +126,11 @@ static void InitializeFlipper(UIApplication *application) {
 
 // Linking API
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
+  #if __has_include(<EXDevLauncherController.h>)
+    if ([EXDevLauncherController.sharedInstance onDeepLink:url options:options]) {
+        return true;
+    }
+  #endif
   return [RCTLinkingManager application:application openURL:url options:options];
 }
 
@@ -109,3 +142,17 @@ static void InitializeFlipper(UIApplication *application) {
 }
 
 @end
+
+#if __has_include(<EXDevLauncherController.h>)
+@implementation AppDelegate (EXDevLauncherControllerDelegate)
+ 
+- (void)devLauncherController:(EXDevLauncherController *)developmentClientController
+          didStartWithSuccess:(BOOL)success
+{
+  developmentClientController.appBridge = [self initializeReactNativeApp];
+  EXSplashScreenService *splashScreenService = (EXSplashScreenService *)[UMModuleRegistryProvider getSingletonModuleForClass:[EXSplashScreenService class]];
+  [splashScreenService showSplashScreenFor:self.window.rootViewController];
+}
+ 
+@end
+#endif

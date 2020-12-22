@@ -6,6 +6,11 @@ PODS:
   - EXConstants (9.3.5):
     - UMConstantsInterface
     - UMCore
+  - EXDevMenu (0.1.0):
+    - EXDevMenuInterface
+    - React
+  - EXDevMenuInterface (0.1.0):
+    - React
   - EXErrorRecovery (1.4.0):
     - UMCore
   - EXFileSystem (9.3.0):
@@ -29,6 +34,9 @@ PODS:
   - EXPermissions (10.0.0):
     - UMCore
     - UMPermissionsInterface
+  - expo-dev-launcher (0.1.0):
+    - EXDevMenuInterface
+    - React
   - EXSecureStore (9.3.0):
     - UMCore
   - EXSplashScreen (0.8.1):
@@ -313,6 +321,8 @@ DEPENDENCIES:
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - EXApplication (from `../node_modules/expo-application/ios`)
   - EXConstants (from `../node_modules/expo-constants/ios`)
+  - EXDevMenu (from `../node_modules/expo-dev-menu`)
+  - EXDevMenuInterface (from `../node_modules/expo-dev-menu-interface`)
   - EXErrorRecovery (from `../node_modules/expo-error-recovery/ios`)
   - EXFileSystem (from `../node_modules/expo-file-system/ios`)
   - EXFont (from `../node_modules/expo-font/ios`)
@@ -321,6 +331,7 @@ DEPENDENCIES:
   - EXLinearGradient (from `../node_modules/expo-linear-gradient/ios`)
   - EXLocation (from `../node_modules/expo-location/ios`)
   - EXPermissions (from `../node_modules/expo-permissions/ios`)
+  - expo-dev-launcher (from `../node_modules/expo-dev-launcher`)
   - EXSecureStore (from `../node_modules/expo-secure-store/ios`)
   - EXSplashScreen (from `../node_modules/expo-splash-screen/ios`)
   - EXSQLite (from `../node_modules/expo-sqlite/ios`)
@@ -380,6 +391,10 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo-application/ios"
   EXConstants:
     :path: "../node_modules/expo-constants/ios"
+  EXDevMenu:
+    :path: "../node_modules/expo-dev-menu"
+  EXDevMenuInterface:
+    :path: "../node_modules/expo-dev-menu-interface"
   EXErrorRecovery:
     :path: "../node_modules/expo-error-recovery/ios"
   EXFileSystem:
@@ -396,6 +411,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo-location/ios"
   EXPermissions:
     :path: "../node_modules/expo-permissions/ios"
+  expo-dev-launcher:
+    :path: "../node_modules/expo-dev-launcher"
   EXSecureStore:
     :path: "../node_modules/expo-secure-store/ios"
   EXSplashScreen:
@@ -492,6 +509,8 @@ SPEC CHECKSUMS:
   DoubleConversion: cde416483dac037923206447da6e1454df403714
   EXApplication: e3c201e7b913d081bbd37bd3c5d0e2cdc21733b4
   EXConstants: 54d0bf04319d1692c6c7bc03ca151ef7a71705a4
+  EXDevMenu: 6713bb5709adb058c7cac6a9346887faa917b1e1
+  EXDevMenuInterface: 2c69e120acacbb868de3a9414907017612638f2c
   EXErrorRecovery: b46af4b91e2b4ec598ab1fa51d2cf088aaf5511f
   EXFileSystem: 0e4974ab77bff04cda68d2886d070cbe64b93a6b
   EXFont: 30c64ed8735a180e3f20046e4fdac4ea074d71d3
@@ -500,6 +519,7 @@ SPEC CHECKSUMS:
   EXLinearGradient: c803fbd1aa974be038177b1e45524bc35759fe9c
   EXLocation: d55e2a37f61bcfb4eba9c813b3f4621d896c4c00
   EXPermissions: 17d4846ad1880f6891c74ae58ca1acb43e47ed47
+  expo-dev-launcher: 15e78fa3c0a22912130902c23bc742cc41f8e37d
   EXSecureStore: 1b571851e6068b30b8ec097be848a04603c03bae
   EXSplashScreen: 8c7c1112ce7611a853486af4737fe2298eda7657
   EXSQLite: bda6a286dded0637bb312ee781239dcca163ff4b
@@ -546,6 +566,6 @@ SPEC CHECKSUMS:
   UMTaskManagerInterface: 4c60b43eaf3cb05a164bc9113258a171c18b7bf7
   Yoga: 4bd86afe9883422a7c4028c00e34790f560923d6
 
-PODFILE CHECKSUM: ff0da64862b5c37415ff57ee9098dac0a8a20421
+PODFILE CHECKSUM: b75daff5bf09eb84c375edf5bbb23618d75cae11
 
 COCOAPODS: 1.9.3
