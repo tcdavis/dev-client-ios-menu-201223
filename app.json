@@ -1,0 +1,12 @@
+{
+  "name": "dev-client-201221",
+  "displayName": "dev-client-201221",
+  "expo": {
+    "name": "dev-client-201221",
+    "slug": "dev-client-201221",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
