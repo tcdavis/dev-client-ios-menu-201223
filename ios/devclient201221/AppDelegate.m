@@ -15,8 +15,8 @@
 @import EXDevMenu;
 #endif
  
-#if __has_include(<EXDevLauncherController.h>)
-#include <EXDevLauncherController.h>
+#if __has_include(<EXDevLauncher/EXDevLauncherController.h>)
+#include <EXDevLauncher/EXDevLauncherController.h>
 #endif
  
 
@@ -58,7 +58,7 @@ static void InitializeFlipper(UIApplication *application) {
   self.launchOptions = launchOptions;
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
   #ifdef DEBUG
-    #if __has_include(<EXDevLauncherController.h>)
+    #if __has_include(<EXDevLauncher/EXDevLauncherController.h>)
       EXDevLauncherController *contoller = [EXDevLauncherController sharedInstance];
       [contoller startWithWindow:self.window delegate:self launchOptions:launchOptions];
     #else
@@ -108,7 +108,7 @@ static void InitializeFlipper(UIApplication *application) {
 
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge {
   #ifdef DEBUG
-    #if __has_include(<EXDevLauncherController.h>)
+    #if __has_include(<EXDevLauncher/EXDevLauncherController.h>)
       return [[EXDevLauncherController sharedInstance] sourceUrl];
     #else
       return [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
@@ -126,7 +126,7 @@ static void InitializeFlipper(UIApplication *application) {
 
 // Linking API
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
-  #if __has_include(<EXDevLauncherController.h>)
+  #if __has_include(<EXDevLauncher/EXDevLauncherController.h>)
     if ([EXDevLauncherController.sharedInstance onDeepLink:url options:options]) {
         return true;
     }
@@ -143,7 +143,7 @@ static void InitializeFlipper(UIApplication *application) {
 
 @end
 
-#if __has_include(<EXDevLauncherController.h>)
+#if __has_include(<EXDevLauncher/EXDevLauncherController.h>)
 @implementation AppDelegate (EXDevLauncherControllerDelegate)
  
 - (void)devLauncherController:(EXDevLauncherController *)developmentClientController
