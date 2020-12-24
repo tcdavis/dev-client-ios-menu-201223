@@ -11,7 +11,7 @@
 #import <EXSplashScreen/EXSplashScreenService.h>
 #import <UMCore/UMModuleRegistryProvider.h>
 
-#if __has_include(<EXDevMenu/EXDevMenu-umbrella.h>)
+#if __has_include(<EXDevMenu/expo-dev-menu-umbrella.h>)
 @import EXDevMenu;
 #endif
  
@@ -77,7 +77,7 @@ static void InitializeFlipper(UIApplication *application) {
 
 - (RCTBridge *)initializeReactNativeApp
 {
-  #if __has_include(<EXDevMenu/EXDevMenu-umbrella.h>)
+  #if __has_include(<EXDevLauncher/EXDevLauncherController.h>)
     NSDictionary *launchOptions = [EXDevLauncherController.sharedInstance getLaunchOptions];
   #else
     NSDictionary *launchOptions = self.launchOptions;
@@ -87,7 +87,7 @@ static void InitializeFlipper(UIApplication *application) {
   RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge moduleName:@"main" initialProperties:nil];
   rootView.backgroundColor = [[UIColor alloc] initWithRed:1.0f green:1.0f blue:1.0f alpha:1];
 
-  #if __has_include(<EXDevMenu/EXDevMenu-umbrella.h>)
+  #if __has_include(<EXDevMenu/expo-dev-menu-umbrella.h>)
   [DevMenuManager configureWithBridge:bridge];
   #endif
 
